@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{userRequests}">userRequests</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style type="text/css">
+        .table td, th {
+            text-align: center;
+            vertical-align: middle;
+            border: 5px solid white;
+        }
+
+        .btnsl {
+            gap: 5%;
+        }
+
+        .b1 {
+            width: 150px;
+        }
+
+        .sort {
+            height: 280px;
+        }
+
+        .divtbl {
+            gap: 15px;
+        }
+
+        .divl {
+            gap: 5px;
+        }
+        .dropdown-menu {
+            min-width: 30px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">Delivery Holder</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="/man/orderList" class="nav-item nav-link active" th:text="#{userRequests}">userRequests</a>
+            </div>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" th:text="${session.user.login}">login</a>
+                <div class="dropdown-menu ">
+                    <a href="/editUser" class="dropdown-item" th:text="#{editing}">editing</a>
+                    <a href="/lout" class="dropdown-item" th:text="#{signOut}">signOut</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav navbar-nav navbar-right">
+            <div class="nav-item dropdown" th:if="${#locale.toString()=='uk'}">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >ua</a>
+                <div class="dropdown-menu">
+                    <a href="/international?lang=en" class="dropdown-item">en</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown" th:if="${#locale.toString()=='en'}">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">en</a>
+                <div class="dropdown-menu">
+                    <a href="/international?lang=uk" class="dropdown-item">ua</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row justify-content-center mt-3 mb-3">
+        <div class="col-md-auto">
+            <h4 th:text="#{userRequests}">userRequests</h4>
+        </div>
+    </div>
+    <div class="row">
+        <h5 class="text mb-0 mt-3 mb-3" th:text="#{filtration}">filtration</h5><br>
+    </div>
+    <form method="post" th:action="@{/filtrationOrder}" th:object="${filter}" id="filter">
+        <div class="row">
+            <div class="col-2 sort">
+                <div class="col-md-auto">
+                    <div class="rounded bg-light p-2 mb-3 sort">
+                        <div class="input-group-prepend">
+                            <p class="pt-3 d-flex align-items-center" th:text="#{deliveryPriceSort}">deliveryPriceSort</p>
+                            <div class="d-flex flex-column divtbl h-75">
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="nbm1" th:text="#{priceFrom}">priceFrom</label>
+                                    <input type="number" id="nbm1" name="minPrice" min="0" th:value="${session.filter.minPrice}"  class="form-control" />
+                                </div>
+                                <div class="form-outline mb-3">
+                                    <label class="form-label" for="nbm2" th:text="#{priceTo}">priceTo</label>
+                                    <input type="number" id="nbm2"  name="maxPrice" min="0" th:value="${session.filter.maxPrice}" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 sort">
+                <div class="col-md-auto">
+                    <div class="rounded bg-light p-2 sort">
+                        <p class="h-25 d-flex align-items-center" th:text="#{orderStatus}">orderStatus</p>
+                        <div class="d-flex flex-column divtbl h-75">
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] == 'На розгляді'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="На розгляді" checked><span th:text="#{underConsideration}">underConsideration</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] != 'На розгляді'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="На розгляді"><span th:text="#{underConsideration}">underConsideration</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] == 'Очікує оплату' || session.filter.paymentStatus[1] == 'Очікує оплату'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="Очікує оплату" checked><span th:text="#{awaitingPayment}">awaitingPayment</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] != 'Очікує оплату' && session.filter.paymentStatus[1] != 'Очікує оплату'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="Очікує оплату"><span th:text="#{awaitingPayment}">awaitingPayment</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] == 'Оплачено' || session.filter.paymentStatus[1] == 'Оплачено'|| session.filter.paymentStatus[2] == 'Оплачено'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="Оплачено" checked><span th:text="#{paid}">paid</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.paymentStatus[0] != 'Оплачено' && session.filter.paymentStatus[1] != 'Оплачено'&& session.filter.paymentStatus[2] != 'Оплачено'}">
+                                <label><input type="checkbox" class="form-check-input" name="paymentStatus" value="Оплачено"><span th:text="#{paid}">paid</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 sort">
+                <div class="col-md-auto">
+                    <div class="rounded bg-light p-2 sort">
+                        <p class="h-25 d-flex align-items-center" th:text="#{locationParcel}">locationParcel</p>
+                        <div class="d-flex flex-column divl h-50">
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] == 'В місті відправлення'}">
+                                <label>
+                                    <input type="checkbox" class="form-check-input" name="locationStatus" value="В місті відправлення" checked><span th:text="#{cityOfDepartureSort}">cityOfDepartureSort</span>
+                                </label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] != 'В місті відправлення'}">
+                                <label>
+                                    <input type="checkbox" class="form-check-input" name="locationStatus" value="В місті відправлення"><span th:text="#{cityOfDepartureSort}">cityOfDepartureSort</span>
+                                </label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] == 'В дорозі' || session.filter.locationStatus[1] == 'В дорозі'}">
+                                <label><input type="checkbox" class="form-check-input" name="locationStatus" value="В дорозі" checked><span th:text="#{inWay}">inWay</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] != 'В дорозі' && session.filter.locationStatus[1] != 'В дорозі'}">
+                                <label><input type="checkbox" class="form-check-input" name="locationStatus" value="В дорозі"><span th:text="#{inWay}">inWay</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] == 'У відділенні пошти' || session.filter.locationStatus[1] == 'У відділенні пошти' || session.filter.locationStatus[2] == 'У відділенні пошти'}">
+                                <label>
+                                    <input type="checkbox" class="form-check-input" name="locationStatus" value="У відділенні пошти" checked><span th:text="#{postOffice}">postOffice</span>
+                                </label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] != 'У відділенні пошти' && session.filter.locationStatus[1] != 'У відділенні пошти' && session.filter.locationStatus[2] != 'У відділенні пошти'}">
+                                <label>
+                                    <input type="checkbox" class="form-check-input" name="locationStatus" value="У відділенні пошти"><span th:text="#{postOffice}">postOffice</span>
+                                </label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] == 'Отримано' || session.filter.locationStatus[1] == 'Отримано' || session.filter.locationStatus[2] == 'Отримано' || session.filter.locationStatus[3] == 'Отримано'}">
+                                <label><input type="checkbox" class="form-check-input" name="locationStatus" value="Отримано" checked><span th:text="#{received}">received</span></label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.locationStatus[0] != 'Отримано' && session.filter.locationStatus[1] != 'Отримано' && session.filter.locationStatus[2] != 'Отримано' && session.filter.locationStatus[3] != 'Отримано'}">
+                                <label><input type="checkbox" class="form-check-input" name="locationStatus" value="Отримано"><span th:text="#{received}">received</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 sort">
+                <div class="col-md-auto">
+                    <div class="rounded bg-light p-2 sort">
+                        <p class="pt-4 d-flex align-items-center" th:text="#{parcelDate}">parcelDate</p>
+                        <div class="d-flex flex-column h-50">
+                            <p class="mb-1" th:text="#{dateOfDispatch}">dateOfDispatch</p>
+                            <label class="d-flex"><p class="w-25" th:text="#{from}">from </p><input class="w-75 h-75" type="date" name="minDateCreate" th:value="${session.filter.minDateCreate}"></label>
+                            <label class="d-flex"><p class="w-25" th:text="#{to}"> </p><input  class="w-75 h-75" type="date" name="maxDateCreate" th:value="${session.filter.maxDateCreate}"></label>
+                            <p class="mb-1" th:text="#{dateOfArrival}">dateOfArrival</p>
+                            <label class="d-flex"><p class="w-25" th:text="#{from}">from </p><input type="date"  class="w-75 h-75" name="minDateOfArrival" th:value="${session.filter.minDateOfArrival}"></label>
+                            <label class="d-flex"><p class="w-25" th:text="#{to}">to </p><input type="date"  class="w-75 h-75" name="maxDateOfArrival" th:value="${session.filter.maxDateOfArrival}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 sort">
+                <div class="col-md-auto">
+                    <div class="rounded bg-light p-2 sort">
+                        <p class="pt-4 d-flex align-items-center" th:text="#{parcelCities}">parcelCities</p>
+                        <div class="d-flex flex-column h-75">
+                            <label for="exampleFormControlSelect1" th:text="#{citiesOfDeparture}">citiesOfDeparture</label>
+                            <select multiple class="form-control" id="exampleFormControlSelect1" name="cityFrom[]" size="2">
+                                <th:block th:each="city : ${cityFromSet}">
+                                    <option><span th:text="${city}">city</span></option>
+                                </th:block>
+                            </select>
+                            <label for="exampleFormControlSelect2" class="mt-4" th:text="#{deliveryCities}">deliveryCities</label>
+                            <select multiple class="form-control" id="exampleFormControlSelect2" name="cityTo[]" size="2">
+                                <th:block th:each="city : ${cityToSet}">
+                                    <option><span th:text="${city}">city</span></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 sort">
+                <div class="rounded bg-light p-2 mb-3 sort">
+                    <div class="input-group-prepend">
+                        <p class="pt-4 d-flex align-items-center" th:text="#{sortingOrders}">sortingOrders</p>
+                        <div class="d-flex flex-column divl h-75 pt-3">
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort == 'sortByMinPrice'}">
+                                <label><input type="radio" name="sort" value="sortByMinPrice" checked><span th:text="#{byPrice}">byPrice</span>↑</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort != 'sortByMinPrice'}">
+                                <label><input type="radio" name="sort" value="sortByMinPrice"><span th:text="#{byPrice}">byPrice</span>↑</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort == 'sortByMaxPrice'}">
+                                <label><input type="radio" name="sort" value="sortByMaxPrice" checked><span th:text="#{byPrice}">byPrice</span>↓</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort != 'sortByMaxPrice'}">
+                                <label><input type="radio" name="sort" value="sortByMaxPrice"><span th:text="#{byPrice}">byPrice</span>↓</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort == 'sortByMinDateCreate'}">
+                                <label><input type="radio" name="sort" value="sortByMinDateCreate" checked><span th:text="#{byDateCreation}">byDateCreation</span>↑</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort != 'sortByMinDateCreate'}">
+                                <label><input type="radio" name="sort" value="sortByMinDateCreate" ><span th:text="#{byDateCreation}">byDateCreation</span>↑</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort == 'sortByMaxDateCreate'}">
+                                <label><input type="radio" name="sort" value="sortByMaxDateCreate" checked><span th:text="#{byDateCreation}">byDateCreation</span>↓</label>
+                            </div>
+                            <div class="input-group-text mb-1" th:if="${session.filter.sort != 'sortByMaxDateCreate'}">
+                                <label><input type="radio" name="sort" value="sortByMaxDateCreate"><span th:text="#{byDateCreation}">byDateCreation</span>↓</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row mt-3">
+        <div class="col-6 d-flex btnsl">
+            <p><a href="/resetOrder" class="btn btn-warning b1" th:text="#{update}">update</a></p>
+            <p><a href="/pdf/orderList" target="_blank" class="btn btn-primary b1" th:text="#{report}">report</a></p>
+        </div>
+        <div class="col-6 d-flex btnsl justify-content-end">
+            <p><input type="submit" class="btn btn-success b1" form="filter" th:value="#{sorting}"></p>
+            <form method="post" th:action="@{/resetOrder}">
+                <input type="submit" class="btn btn-success b1" th:value="#{resetFilters}">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-borderless">
+            <tr>
+                <th class="bg-light">Id</th>
+                <th class="bg-light" th:text="#{description}">description</th>
+                <th class="bg-light" th:text="#{price}">price</th>
+                <th class="bg-light" th:text="#{cityOfDeparture}">cityOfDeparture</th>
+                <th class="bg-light" th:text="#{cityOfReceipt}">cityOfReceipt</th>
+                <th class="bg-light" th:text="#{dateOfCreation}">dateOfCreation</th>
+                <th class="bg-light" th:text="#{dateOfArrival}">dateOfArrival</th>
+                <th class="bg-light" th:text="#{status}">status</th>
+                <th class="bg-light" th:text="#{location}">location</th>
+                <th class="bg-light" th:text="#{customer}">customer</th>
+                <th class="bg-light" th:text="#{readMore}">readMore</th>
+            </tr>
+            <th:block th:each="order : ${session.shortOrders}">
+                <tr>
+                    <td class="bg-light" th:text="${order.id}">order.id</td>
+                    <td class="bg-light" th:text="${order.description}">order.description</td>
+                    <td class="bg-light" th:text="${order.price}">order.price</td>
+                    <td class="bg-light" th:text="${order.cityFrom}">order.cityFrom</td>
+                    <td class="bg-light" th:text="${order.cityTo}">order.cityTo</td>
+                    <td class="bg-light" th:text="${order.dateCreate}">order.dateCreate</td>
+                    <td class="bg-light" th:text="${order.dateOfArrival}">order.dateOfArrival</td>
+                    <td class="bg-light" th:text="${order.paymentStatus.status}">order.paymentStatus</td>
+                    <td class="bg-light" th:text="${order.locationStatus.location}">order.locationStatus</td>
+                    <td class="bg-light" th:text="${order.user.login}">order.user</td>
+                    <td class="bg-light">
+                        <abbr title="детальніше про замовлення" >
+                            <a th:href="@{'/man/infoAboutOrder?id=' + ${order.id}}" class="btn btn-outline-primary" th:text="#{readMore}"></a>
+                        </abbr>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+    <div class="row justify-content-center" th:if="${session.listNumberOrder!=null}">
+        <div class="col-md-auto">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a th:href="@{'/changePage?fun=2&id=' + ${session.previousPageOrder}}" class="page-link" th:text="#{previous}">previous</a>
+                    </li>
+                    <th:block th:each="n : ${session.listNumberOrder}">
+                        <th:block th:if="${session.pageNumberOrder==n}">
+                            <li class="page-item active">
+                                <a th:href="@{'/changePage?fun=2&id=' + ${n}}" class="page-link"  th:text="${n}">n
+                                </a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${session.pageNumberOrder!=n}">
+                            <li class="page-item">
+                                <a th:href="@{'/changePage?fun=2&id=' + ${n}}" class="page-link"  th:text="${n}">n
+                                </a>
+                            </li>
+                        </th:block>
+                    </th:block>
+                    </li>
+                    <li class="page-item">
+                        <a th:href="@{'/changePage?fun=2&id=' + ${session.pageNumberOrder+1}}" class="page-link" th:text="#{next}">next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script src="/script/scriptUser.js"></script>
+</body>
+</html>
