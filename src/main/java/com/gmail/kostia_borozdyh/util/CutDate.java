@@ -7,9 +7,6 @@ import java.util.Date;
 public class CutDate {
 
     public static String cut(Date date) {
-        if (date == null) {
-            return null;
-        }
-        return Calculate.convertToLocalDate(date).toString();
+        return (date==null) ? null : Calculate.convertToLocalDate(date).toString();
     }
 }

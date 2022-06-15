@@ -16,9 +16,8 @@ import java.util.List;
 public class ChangePageController {
 
     @GetMapping("/changePage")
-    public String changePage(HttpServletRequest request, HttpSession session) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        int fun = Integer.parseInt(request.getParameter("fun"));
+    public String changePage(@RequestParam(name = "id") Integer id, @RequestParam(name = "fun") Integer fun,
+                             HttpSession session,HttpServletRequest request) {
         String referer = request.getHeader("Referer");
         switch (fun) {
             case 1: {

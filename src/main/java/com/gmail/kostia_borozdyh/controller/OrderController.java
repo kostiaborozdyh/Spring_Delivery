@@ -56,9 +56,8 @@ public class OrderController {
 
         if (user.getRole().getRole().equals("USER")) {
             return "user/order";
-        } else {
-            return "man/orderList";
         }
+        return "man/orderList";
     }
 
     @PostMapping("/filtrationOrder")

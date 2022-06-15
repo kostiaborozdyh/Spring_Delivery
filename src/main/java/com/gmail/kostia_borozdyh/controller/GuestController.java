@@ -43,8 +43,9 @@ public class GuestController {
             user.setPassword("");
             session.setAttribute("user", user);
         }
+        boolean userIsAuthorized = user != null;
 
-        if (user != null) {
+        if (userIsAuthorized) {
             switch (user.getRole().getRole()) {
                 case "MANAGER":
                     return "redirect:/order";

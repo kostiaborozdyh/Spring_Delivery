@@ -41,7 +41,8 @@ public class EditUserController {
     }
 
     @PostMapping("/editUser")
-    public String registrationUser(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
+    public String registrationUser(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult,
+                                   HttpSession session, HttpServletRequest request) {
         User user = (User) session.getAttribute("user");
         session.setAttribute("userDTO", userDTO);
         if (userService.findByEmail(userDTO.getEmail()) != null && (!Objects.equals(userDTO.getEmail(), user.getEmail()))) {

@@ -11,12 +11,8 @@ import com.gmail.kostia_borozdyh.util.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -65,18 +61,15 @@ public class UserController {
     }
 
     @GetMapping("/sendEmailOrder")
-    public String sendEmailOrder(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("idOrder"));
-        User user = (User) request.getSession().getAttribute("user");
+    public String sendEmailOrder(@RequestParam(name = "idOrder") Integer id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         SendEmail.send(user.getEmail(), CreateMessage.messageSendOrder(OrderDTO.fromOrder(orderService.getOrderById(id))));
         return "user/order";
     }
 
     @GetMapping("/pay")
-    public String payOrder(HttpServletRequest request, HttpSession session) {
-        Integer orderId = Integer.parseInt(request.getParameter("id"));
-        Integer value = Integer.parseInt(request.getParameter("value"));
-        Integer money = Integer.parseInt(request.getParameter("money"));
+    public String payOrder(@RequestParam(name = "id") Integer orderId,@RequestParam(name = "value") Integer value,
+                           @RequestParam(name = "money") Integer money,HttpSession session) {
 
         User user = (User) session.getAttribute("user");
         user.setMoney(money - value);
@@ -88,23 +81,20 @@ public class UserController {
     }
 
     @GetMapping("/infoAboutOrder")
-    public String getInfoOrderPage(HttpServletRequest request, Model model) {
-        Integer orderId = Integer.parseInt(request.getParameter("id"));
+    public String getInfoOrderPage(@RequestParam(name = "id") Integer orderId, Model model) {
         model.addAttribute("infoOrder", OrderDTO.fromOrder(orderService.getOrderById(orderId)));
         return "/user/userOrder";
     }
 
     @PostMapping("/refill")
-    public String refillMoney(HttpServletRequest request, HttpSession session) {
-        int value = Integer.parseInt(request.getParameter("value"));
+    public String refillMoney(@RequestParam(name = "value") Integer value, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        int money;
+        int money=0;
 
-        if (user.getMoney() == null) {
-            money = 0;
-        } else {
+        if (user.getMoney() != null) {
             money = user.getMoney();
         }
+
         user.setMoney(money + value);
         userService.updateUserMoneyById(money + value, user.getId());
         return "redirect:/user/refill";
@@ -116,9 +106,7 @@ public class UserController {
     }
 
     @GetMapping("/showLocation")
-    public String getLocationPage(HttpServletRequest request, Model model) {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-
+    public String getLocationPage(@RequestParam(name = "id") Integer id, Model model) {
         PointDTO currentPoint = Calculate.getPointAtTheMoment(orderService.getOrderById(id));
 
         model.addAttribute("latitude", currentPoint.getLatitude());

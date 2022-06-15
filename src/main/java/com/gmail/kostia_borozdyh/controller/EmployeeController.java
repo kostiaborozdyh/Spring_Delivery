@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -34,8 +34,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/chooseCity")
-    public String chooseCity(HttpSession session, HttpServletRequest request) {
-        String city = request.getParameter("city");
+    public String chooseCity(@RequestParam(name = "city") String city, HttpSession session) {
         city = JsonParser.cutCityNameForEmployee(city);
         session.setAttribute("city", city);
         return "redirect:/employee/ordersTable";
@@ -57,22 +56,19 @@ public class EmployeeController {
         String city = (String) session.getAttribute("city");
         if (city == null) {
             return "redirect:/employee/ordersTable";
-        } else {
-            model.addAttribute("orderList", orderService.getAcceptOrdersByCity(city));
         }
+        model.addAttribute("orderList", orderService.getAcceptOrdersByCity(city));
         return "employee/acceptOrder";
     }
 
     @PostMapping("/putOnRecord")
-    public String putOnRecord(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+    public String putOnRecord(@RequestParam(name = "id") Integer id) {
         orderService.putOnRecord(id);
         return "redirect:/employee/acceptOrder";
     }
 
     @PostMapping("/giveOrder")
-    public String giveOrder(HttpServletRequest request, HttpSession session) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+    public String giveOrder(@RequestParam(name = "id") Integer id, HttpSession session) {
         String code = GenerateCode.sendCode(orderService.getOrderById(id).getUser().getEmail());
         session.setAttribute("code", code);
         session.setAttribute("idOrder", id);
@@ -89,8 +85,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/give")
-    public String giveOrderToUser(HttpServletRequest request, HttpSession session) {
-        String code = request.getParameter("code");
+    public String giveOrderToUser(@RequestParam(name = "code") String code, HttpSession session) {
         String trueCode = (String) session.getAttribute("code");
         if (code.equals(trueCode)) {
             Integer id = (Integer) session.getAttribute("idOrder");
@@ -98,10 +93,9 @@ public class EmployeeController {
             session.removeAttribute("idOrder");
             session.removeAttribute("code");
             return "redirect:/employee/ordersTable";
-        } else {
-            session.setAttribute("invalidCode", "invalidCode");
-            return "redirect:/employee/enterCode";
         }
+        session.setAttribute("invalidCode", "invalidCode");
+        return "redirect:/employee/enterCode";
 
     }
 }

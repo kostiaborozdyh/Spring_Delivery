@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,27 +46,21 @@ public class AdminController {
     }
 
     @PostMapping("/blockUser")
-    public String blockUser(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
-
+    public String blockUser(@RequestParam(name = "id") Integer id) {
         userService.blockUser(id);
 
         return "redirect:/adm/usersTable";
     }
 
     @PostMapping("/unblockUser")
-    public String unblockUser(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
-
+    public String unblockUser(@RequestParam(name = "id") Integer id) {
         userService.unblockUser(id);
 
         return "redirect:/adm/usersTable";
     }
 
     @PostMapping("/deleteUser")
-    public String deleteUser(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
-
+    public String deleteUser(@RequestParam(name = "id") Integer id) {
         userService.deleteUser(id);
 
         return "redirect:/adm/usersTable";

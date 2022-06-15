@@ -7,8 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -27,15 +26,13 @@ public class ManagerController {
     }
 
     @GetMapping("/infoAboutOrder")
-    public String getInfoOrderPage(HttpServletRequest request, Model model) {
-        Integer orderId = Integer.parseInt(request.getParameter("id"));
+    public String getInfoOrderPage(@RequestParam(name = "id") Integer orderId, Model model) {
         model.addAttribute("infoOrder", OrderDTO.fromOrder(orderService.getOrderById(orderId)));
         return "man/orderUser";
     }
 
     @GetMapping("/confirmOrder")
-    public String getCreateOrderPage(HttpServletRequest request) {
-        Integer orderId = Integer.parseInt(request.getParameter("id"));
+    public String getCreateOrderPage(@RequestParam(name = "id") Integer orderId) {
         orderService.confirmOrderById(orderId);
         return "redirect:/man/infoAboutOrder?id=" + orderId;
     }

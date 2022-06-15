@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,8 +54,7 @@ public class PdfController {
     }
 
     @GetMapping("/userOrder")
-    public void pdfUserOrder(HttpServletResponse response, HttpServletRequest request) throws IOException {
-        Integer id = Integer.valueOf(request.getParameter("idOrder"));
+    public void pdfUserOrder(@RequestParam(name = "idOrder") Integer id,HttpServletResponse response) throws IOException {
         OrderDTO order = OrderDTO.fromOrder(orderService.getOrderById(id));
 
         ByteArrayOutputStream byteArrayOutputStream = CreatePdf.userOrder(order);

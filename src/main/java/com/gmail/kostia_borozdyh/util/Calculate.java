@@ -15,7 +15,9 @@ public class Calculate {
     }
 
     public static Integer avgPrice(Integer distance) {
-        if (distance == 0) return 100;
+        if (distance == 0){
+            return 100;
+        }
         return distance * 15 / 10;
     }
 
@@ -37,13 +39,12 @@ public class Calculate {
     }
 
     public static int diffDays(LocalDate dateOfSending, LocalDate dateOfArrival) {
-        int length1 = dateOfSending.getDayOfYear();
-        int length2 = dateOfArrival.getDayOfYear();
+        int numberOfDaysSending = dateOfSending.getDayOfYear();
+        int numberOfDaysArrival = dateOfArrival.getDayOfYear();
         if (dateOfArrival.getYear() != dateOfSending.getYear()) {
-            return length2 - length1 + 365;
-        } else {
-            return length2 - length1;
+            return numberOfDaysArrival - numberOfDaysSending + 365;
         }
+        return numberOfDaysArrival - numberOfDaysSending;
     }
 
     public static Set<String> cityFromSet(List<Order> orderList) {
@@ -70,14 +71,16 @@ public class Calculate {
 
     public static List<Integer> getPaginationList(Integer count) {
         List<Integer> list = new ArrayList<>();
-        int a = 0;
-        if (count % 5 != 0) a = 1;
-        int length = count / 5 + a;
+        int addPage = 0;
+        if (count % 5 != 0) addPage = 1;
+        int length = count / 5 + addPage;
         for (int i = 0; i < length; i++) {
             list.add(i + 1);
         }
-        if (count <= 5) return null;
-        else return list;
+        if (count <= 5) {
+            return null;
+        }
+        return list;
     }
 
     public static <T> List<T> getFiveElements(List<T> inputList, int index) {
@@ -95,7 +98,8 @@ public class Calculate {
     public static <T> int pageId(int id, List<T> list) {
         if (id == 0) {
             id = 1;
-        } else if (id == list.size() + 1) {
+        }
+        if (id == list.size() + 1) {
             id = list.size();
         }
         return id;
@@ -119,8 +123,11 @@ public class Calculate {
             return cityToPoint;
         }
         int diffDays = diffDays(convertToLocalDate(order.getDateOfSending()), LocalDate.now());
-        if (diffDays == 0) time = time - 22;
-        else time = time + (diffDays - 1) * 24 + 2;
+        if (diffDays == 0) {
+            time = time - 22;
+        } else {
+            time = time + (diffDays - 1) * 24 + 2;
+        }
         return currentPoint(cityFromPoint, cityToPoint, days, time);
     }
 

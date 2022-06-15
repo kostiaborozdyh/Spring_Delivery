@@ -1,6 +1,6 @@
 package com.gmail.kostia_borozdyh.config;
 
-import com.gmail.kostia_borozdyh.service.impl.UserEnterService;
+import com.gmail.kostia_borozdyh.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserEnterService userEnterService;
+    private UserService userService;
 
     @Autowired
-    public void setUserEnterService(UserEnterService userEnterService) {
-        this.userEnterService = userEnterService;
+    public void setUserEnterService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userEnterService);
+        authenticationProvider.setUserDetailsService(userService);
         return authenticationProvider;
     }
 }

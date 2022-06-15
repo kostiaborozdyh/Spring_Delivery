@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,17 +31,16 @@ public class RestorePasswordController {
     }
 
     @PostMapping("/restore")
-    public String Restore(HttpServletRequest request, HttpSession session) {
-        String login = request.getParameter("login");
+    public String Restore(@RequestParam(name = "login") String login, HttpSession session) {
         String email = userService.getUserEmailForRestore(login);
         if (email == null) {
             session.setAttribute("invalidLogin", "invalidLogin");
             return "redirect:/restore/restore";
-        } else {
-            session.setAttribute("email", email);
-            session.setAttribute("code", GenerateCode.restorePassword(email));
-            return "redirect:/restore/restorePassword";
         }
+        session.setAttribute("email", email);
+        session.setAttribute("code", GenerateCode.restorePassword(email));
+        return "redirect:/restore/restorePassword";
+
     }
 
     @GetMapping("/restorePassword")
@@ -51,15 +51,15 @@ public class RestorePasswordController {
     }
 
     @PostMapping("/restorePassword")
-    public String RestorePassword(HttpServletRequest request, HttpSession session) {
-        String code = request.getParameter("code");
+    public String RestorePassword(@RequestParam(name = "code") String code, HttpSession session) {
         String trueCode = (String) session.getAttribute("code");
+
         if (code.equals(trueCode)) {
             return "redirect:/restore/enterPassword";
-        } else {
-            session.setAttribute("invalidCode", "invalidCode");
-            return "redirect:/restore/restorePassword";
         }
+
+        session.setAttribute("invalidCode", "invalidCode");
+        return "redirect:/restore/restorePassword";
     }
 
     @GetMapping("/enterPassword")
@@ -72,9 +72,9 @@ public class RestorePasswordController {
     }
 
     @PostMapping("/enterPassword")
-    public String enterPasswordPage(HttpSession session, HttpServletRequest request) {
-        String password = request.getParameter("password");
-        String secondPassword = request.getParameter("secondPassword");
+    public String enterPasswordPage(@RequestParam(name = "password") String password,
+                                    @RequestParam(name = "secondPassword") String secondPassword,
+                                    HttpSession session) {
 
         if (!password.equals(secondPassword)) {
             session.setAttribute("passwordInvalid", "invalid");

@@ -72,9 +72,8 @@ public class OrderService implements IOrderService {
     public List<Order> getOrdersByUser(User user) {
         if (user.getRole().getRole().equals("USER")) {
             return orderRepository.getAllByUser(user);
-        } else {
-            return orderRepository.findAll();
         }
+        return orderRepository.findAll();
 
     }
 

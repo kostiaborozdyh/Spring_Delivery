@@ -77,9 +77,9 @@ public class JsonParser {
         sb.delete(lastIndex, sb.length());
         if (count == 2) {
             return sb.toString();
-        } else {
-            return sb.replace(sb.indexOf(","), sb.lastIndexOf(","), "").toString();
         }
+        return sb.replace(sb.indexOf(","), sb.lastIndexOf(","), "").toString();
+
 
     }
 

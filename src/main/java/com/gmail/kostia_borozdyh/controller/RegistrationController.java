@@ -20,10 +20,15 @@ import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
     private UserService userService;
     private RoleService roleService;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     public void setRoleService(RoleService roleService) {
@@ -45,13 +50,13 @@ public class RegistrationController {
         session.removeAttribute("validation");
         if (session.getAttribute("user") == null) {
             return "/registration";
-        } else {
-            return "/adm/createEmployeeAccount";
         }
+        return "/adm/createEmployeeAccount";
     }
 
     @PostMapping("/registration")
-    public String registrationUser(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
+    public String registrationUser(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult,
+                                   HttpSession session, HttpServletRequest request) {
         session.setAttribute("userDTO", userDTO);
 
         if (userService.findByLogin(userDTO.getLogin()) != null) {
@@ -96,9 +101,8 @@ public class RegistrationController {
         if (session.getAttribute("user") == null) {
             session.setAttribute("registration", "yes");
             return "redirect:/login";
-        } else {
-            return "redirect:/adm/usersTable";
         }
+        return "redirect:/adm/usersTable";
     }
 
 

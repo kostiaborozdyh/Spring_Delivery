@@ -29,9 +29,8 @@ public class InfoTableService implements IInfoTableService {
     public List<InfoTableDTO> getShortInfoTable(List<InfoTableDTO> infoTable, List<Integer> list) {
         if (list == null) {
             return infoTable;
-        } else {
-            return Calculate.getFiveElements(infoTable, 1);
         }
+        return Calculate.getFiveElements(infoTable, 1);
     }
 
     @Override
