@@ -7,6 +7,7 @@ import com.gmail.kostia_borozdyh.service.impl.OrderService;
 import com.gmail.kostia_borozdyh.util.Calculate;
 import com.gmail.kostia_borozdyh.util.ConvertToDTO;
 import com.gmail.kostia_borozdyh.util.Filtration;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class OrderController {
     private OrderService orderService;
 
@@ -34,6 +36,7 @@ public class OrderController {
         if (orderList == null) {
             orderList = orderService.getOrdersByUser(user);
             session.setAttribute("orders", orderList);
+            log.info("add orders in session orderList for user - "+user.getLogin());
         }
 
         model.addAttribute("cityFromSet", Calculate.cityFromSet(orderList));

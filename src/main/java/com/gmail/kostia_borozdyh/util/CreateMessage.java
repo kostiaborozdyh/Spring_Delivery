@@ -24,22 +24,6 @@ public class CreateMessage {
         return new String[]{THEME_CHANGE_PAYMENT_STATUS, TEXT_CHANGE_PAYMENT_STATUS + price};
     }
 
-    public static String[] messageSendOrder(OrderDTO order) {
-        String sbTheme = THEME_SEND_ORDER + order.getId();
-        String sb = "Опис: " + order.getDescription() + "\n" +
-                "Вага: " + order.getWeight() + "\n" +
-                "Об'єм: " + order.getVolume() + "\n" +
-                "Ціна: " + order.getPrice() + "\n" +
-                "Місто відправлення: " + order.getCityFrom() + "\n" +
-                "Місто прибуття: " + order.getCityTo() + "\n" +
-                "Адреса: " + order.getAddress() + "\n" +
-                "Дата створення: " + order.getDateCreate() + "\n" +
-                "Дата прибуття: " + order.getDateOfArrival() + "\n" +
-                "Статус: " + order.getPaymentStatus().getStatus() + "\n";
-        return new String[]{sbTheme, sb};
-
-    }
-
     public static String[] blockUser() {
         return new String[]{THEME_BLOCK_USER, TEXT_BLOCK_USER};
     }
@@ -62,5 +46,20 @@ public class CreateMessage {
 
     public static String[] putOnRecord(Integer id) {
         return new String[]{THEME_PUT_ON_RECORD, TEXT_PUT_ON_RECORD + id};
+    }
+    public static String[] messageSendOrder(OrderDTO order) {
+        String sbTheme = THEME_SEND_ORDER + order.getId();
+        String sb = "Опис: " + order.getDescription() + "\n" +
+                "Вага: " + order.getWeight() + "\n" +
+                "Об'єм: " + order.getVolume() + "\n" +
+                "Ціна: " + order.getPrice() + "\n" +
+                "Місто відправлення: " + order.getCityFrom() + "\n" +
+                "Місто прибуття: " + order.getCityTo() + "\n" +
+                "Адреса: " + order.getAddress() + "\n" +
+                "Дата створення: " + order.getDateCreate() + "\n" +
+                "Дата прибуття: " + order.getDateOfArrival() + "\n" +
+                "Статус: " + order.getPaymentStatus().getStatus() + "\n";
+        return new String[]{sbTheme, sb};
+
     }
 }

@@ -14,7 +14,7 @@ public interface IUserService {
 
     Long countUser();
 
-    List<User> getUserLimit(Integer lim);
+    List<User> getUserLimit(Integer offset);
 
     void updateUserMoneyById(Integer money, Integer id);
 

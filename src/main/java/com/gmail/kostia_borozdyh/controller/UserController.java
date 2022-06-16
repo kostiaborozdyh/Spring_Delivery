@@ -8,6 +8,7 @@ import com.gmail.kostia_borozdyh.service.impl.UserService;
 import com.gmail.kostia_borozdyh.util.Calculate;
 import com.gmail.kostia_borozdyh.util.CreateMessage;
 import com.gmail.kostia_borozdyh.util.SendEmail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/user")
+@Slf4j
 public class UserController {
     private UserService userService;
     private OrderService orderService;
@@ -77,6 +79,8 @@ public class UserController {
         userService.updateUserMoneyById(money - value, user.getId());
         orderService.updateOrderPaymentStatusById(orderId);
 
+        log.info("user with login - "+user.getLogin()+" pay for order, order price - "+value+" now he has "+user.getMoney()+"$");
+
         return "redirect:/resetOrder";
     }
 
@@ -97,6 +101,9 @@ public class UserController {
 
         user.setMoney(money + value);
         userService.updateUserMoneyById(money + value, user.getId());
+
+        log.info("user with login - "+user.getLogin()+" refill his account on "+value+" now he has "+user.getMoney()+"$");
+
         return "redirect:/user/refill";
     }
 

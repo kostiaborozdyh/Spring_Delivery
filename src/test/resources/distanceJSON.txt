@@ -1,0 +1,414 @@
+{
+   "destination_addresses" : [
+      "Кривий Ріг, Дніпропетровська область, Україна, 50000",
+      "Донецьк, Донецька область, Україна",
+      "Харків, Харківська область, Україна",
+      "Варшава, Польща",
+      "Миколаїв, Миколаївська область, Україна, 54000"
+   ],
+   "origin_addresses" : [
+      "Київ, Україна, 02000",
+      "Черкаси, Черкаська область, Україна, 18000",
+      "Канів, Черкаська область, Україна, 19000",
+      "Чернігів, Чернігівська область, Україна, 14039",
+      "Луцьк, Волинська область, Україна"
+   ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "421 км",
+                  "value" : 420780
+               },
+               "duration" : {
+                  "text" : "5 год 57 хв",
+                  "value" : 21448
+               },
+               "duration_in_traffic" : {
+                  "text" : "6 год 22 хв",
+                  "value" : 22930
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "741 км",
+                  "value" : 741094
+               },
+               "duration" : {
+                  "text" : "10 год 9 хв",
+                  "value" : 36544
+               },
+               "duration_in_traffic" : {
+                  "text" : "10 год 43 хв",
+                  "value" : 38586
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "479 км",
+                  "value" : 479087
+               },
+               "duration" : {
+                  "text" : "6 год 2 хв",
+                  "value" : 21736
+               },
+               "duration_in_traffic" : {
+                  "text" : "6 год 34 хв",
+                  "value" : 23638
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "782 км",
+                  "value" : 782380
+               },
+               "duration" : {
+                  "text" : "9 год 42 хв",
+                  "value" : 34895
+               },
+               "duration_in_traffic" : {
+                  "text" : "10 год 14 хв",
+                  "value" : 36855
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "601 км",
+                  "value" : 601072
+               },
+               "duration" : {
+                  "text" : "7 год 20 хв",
+                  "value" : 26378
+               },
+               "duration_in_traffic" : {
+                  "text" : "7 год 52 хв",
+                  "value" : 28333
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "247 км",
+                  "value" : 247266
+               },
+               "duration" : {
+                  "text" : "3 год 40 хв",
+                  "value" : 13218
+               },
+               "duration_in_traffic" : {
+                  "text" : "3 год 44 хв",
+                  "value" : 13452
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "600 км",
+                  "value" : 600306
+               },
+               "duration" : {
+                  "text" : "9 год 0 хв",
+                  "value" : 32371
+               },
+               "duration_in_traffic" : {
+                  "text" : "9 год 8 хв",
+                  "value" : 32905
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "370 км",
+                  "value" : 370242
+               },
+               "duration" : {
+                  "text" : "5 год 46 хв",
+                  "value" : 20759
+               },
+               "duration_in_traffic" : {
+                  "text" : "6 год 3 хв",
+                  "value" : 21769
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "970 км",
+                  "value" : 969531
+               },
+               "duration" : {
+                  "text" : "12 год 16 хв",
+                  "value" : 44174
+               },
+               "duration_in_traffic" : {
+                  "text" : "12 год 42 хв",
+                  "value" : 45737
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "571 км",
+                  "value" : 571048
+               },
+               "duration" : {
+                  "text" : "7 год 16 хв",
+                  "value" : 26171
+               },
+               "duration_in_traffic" : {
+                  "text" : "7 год 51 хв",
+                  "value" : 28267
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "326 км",
+                  "value" : 326344
+               },
+               "duration" : {
+                  "text" : "4 год 43 хв",
+                  "value" : 16990
+               },
+               "duration_in_traffic" : {
+                  "text" : "4 год 59 хв",
+                  "value" : 17957
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "666 км",
+                  "value" : 665548
+               },
+               "duration" : {
+                  "text" : "10 год 0 хв",
+                  "value" : 36016
+               },
+               "duration_in_traffic" : {
+                  "text" : "10 год 22 хв",
+                  "value" : 37323
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "476 км",
+                  "value" : 475782
+               },
+               "duration" : {
+                  "text" : "5 год 59 хв",
+                  "value" : 21553
+               },
+               "duration_in_traffic" : {
+                  "text" : "6 год 22 хв",
+                  "value" : 22934
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "910 км",
+                  "value" : 910260
+               },
+               "duration" : {
+                  "text" : "11 год 34 хв",
+                  "value" : 41636
+               },
+               "duration_in_traffic" : {
+                  "text" : "12 год 1 хв",
+                  "value" : 43230
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "613 км",
+                  "value" : 612853
+               },
+               "duration" : {
+                  "text" : "7 год 41 хв",
+                  "value" : 27687
+               },
+               "duration_in_traffic" : {
+                  "text" : "8 год 21 хв",
+                  "value" : 30083
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "575 км",
+                  "value" : 574751
+               },
+               "duration" : {
+                  "text" : "8 год 25 хв",
+                  "value" : 30327
+               },
+               "duration_in_traffic" : {
+                  "text" : "9 год 15 хв",
+                  "value" : 33275
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "889 км",
+                  "value" : 888964
+               },
+               "duration" : {
+                  "text" : "12 год 15 хв",
+                  "value" : 44074
+               },
+               "duration_in_traffic" : {
+                  "text" : "13 год 13 хв",
+                  "value" : 47560
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "613 км",
+                  "value" : 613165
+               },
+               "duration" : {
+                  "text" : "8 год 6 хв",
+                  "value" : 29145
+               },
+               "duration_in_traffic" : {
+                  "text" : "8 год 47 хв",
+                  "value" : 31590
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "912 км",
+                  "value" : 911842
+               },
+               "duration" : {
+                  "text" : "11 год 53 хв",
+                  "value" : 42758
+               },
+               "duration_in_traffic" : {
+                  "text" : "12 год 27 хв",
+                  "value" : 44802
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "758 км",
+                  "value" : 757718
+               },
+               "duration" : {
+                  "text" : "10 год 0 хв",
+                  "value" : 36015
+               },
+               "duration_in_traffic" : {
+                  "text" : "10 год 53 хв",
+                  "value" : 39162
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "790 км",
+                  "value" : 790416
+               },
+               "duration" : {
+                  "text" : "10 год 49 хв",
+                  "value" : 38935
+               },
+               "duration_in_traffic" : {
+                  "text" : "11 год 43 хв",
+                  "value" : 42168
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "1 152 км",
+                  "value" : 1152302
+               },
+               "duration" : {
+                  "text" : "15 год 24 хв",
+                  "value" : 55436
+               },
+               "duration_in_traffic" : {
+                  "text" : "16 год 3 хв",
+                  "value" : 57789
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "890 км",
+                  "value" : 890294
+               },
+               "duration" : {
+                  "text" : "11 год 17 хв",
+                  "value" : 40628
+               },
+               "duration_in_traffic" : {
+                  "text" : "11 год 59 хв",
+                  "value" : 43142
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "409 км",
+                  "value" : 408598
+               },
+               "duration" : {
+                  "text" : "5 год 9 хв",
+                  "value" : 18536
+               },
+               "duration_in_traffic" : {
+                  "text" : "5 год 9 хв",
+                  "value" : 18546
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "900 км",
+                  "value" : 899592
+               },
+               "duration" : {
+                  "text" : "11 год 41 хв",
+                  "value" : 42057
+               },
+               "duration_in_traffic" : {
+                  "text" : "13 год 1 хв",
+                  "value" : 46855
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}

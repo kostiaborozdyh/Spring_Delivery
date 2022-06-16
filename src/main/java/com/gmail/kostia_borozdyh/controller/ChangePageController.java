@@ -4,6 +4,7 @@ import com.gmail.kostia_borozdyh.dto.InfoTableDTO;
 import com.gmail.kostia_borozdyh.entity.Order;
 import com.gmail.kostia_borozdyh.util.Calculate;
 import com.gmail.kostia_borozdyh.util.ConvertToDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
+@Slf4j
 public class ChangePageController {
-
     @GetMapping("/changePage")
     public String changePage(@RequestParam(name = "id") Integer id, @RequestParam(name = "fun") Integer fun,
                              HttpSession session,HttpServletRequest request) {
@@ -47,6 +49,7 @@ public class ChangePageController {
             }
 
         }
-        return "error";
+        log.error("problem with changing page, pageNumber = "+id+", fun = "+fun);
+        return "error-505";
     }
 }

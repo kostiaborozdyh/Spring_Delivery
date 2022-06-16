@@ -134,10 +134,10 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-auto">
                                     <h5 th:text="#{deliveryInformation}">deliveryInformation</h5>
-                                    <p> <span th:text="#{productInformation}">productInformation</span>:<span th:text="${session.orderDTO!=null} ? ${session.orderDTO.description} :''">orderDTO.description</span><br>
-                                        <span th:text="#{departurePoint}">departurePoint</span><span th:text="${session.orderDTO!=null} ? ${session.orderDTO.cityFrom} :''">orderDTO.cityFrom</span><br>
-                                        <span th:text="#{destination}">destination</span><span th:text="${session.orderDTO!=null} ? ${session.orderDTO.cityTo}:''">orderDTO.cityTo</span><br>
-                                        <span th:text="#{deliveryAddress}">deliveryAddress</span><span th:text="${session.orderDTO!=null} ? ${session.orderDTO.address}:''">orderDTO.address</span><br>
+                                    <p> <span th:text="#{productInformation}">productInformation</span>: <span th:text="${session.orderDTO!=null} ? ${session.orderDTO.description} :''">orderDTO.description</span><br>
+                                        <span th:text="#{departurePoint}">departurePoint</span> <span th:text="${session.orderDTO!=null} ? ${session.orderDTO.cityFrom} :''">orderDTO.cityFrom</span><br>
+                                        <span th:text="#{destination}">destination</span> <span th:text="${session.orderDTO!=null} ? ${session.orderDTO.cityTo}:''">orderDTO.cityTo</span><br>
+                                        <span th:text="#{deliveryAddress}">deliveryAddress</span> <span th:text="${session.orderDTO!=null} ? ${session.orderDTO.address}:''">orderDTO.address</span><br>
                                         <span th:text="#{cargoWeight}">cargoWeight</span>
                                         <th:block th:if="${session.orderDTO!=null}">
                                             <span th:text="${session.orderDTO.weight}">orderDTO.weight</span> <span th:text="#{kg}">kg</span>

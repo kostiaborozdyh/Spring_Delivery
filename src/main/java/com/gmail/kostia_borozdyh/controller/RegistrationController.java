@@ -5,6 +5,7 @@ import com.gmail.kostia_borozdyh.entity.User;
 import com.gmail.kostia_borozdyh.service.impl.RoleService;
 import com.gmail.kostia_borozdyh.service.impl.UserService;
 import com.gmail.kostia_borozdyh.util.Validator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
+@Slf4j
 public class RegistrationController {
 
     private PasswordEncoder passwordEncoder;
@@ -97,6 +99,8 @@ public class RegistrationController {
         session.removeAttribute("invalid");
         session.removeAttribute("userDTO");
         session.removeAttribute("validation");
+
+        log.info("register user with login - "+userDTO.getLogin());
 
         if (session.getAttribute("user") == null) {
             session.setAttribute("registration", "yes");

@@ -87,6 +87,7 @@ public class EmployeeController {
     @PostMapping("/give")
     public String giveOrderToUser(@RequestParam(name = "code") String code, HttpSession session) {
         String trueCode = (String) session.getAttribute("code");
+
         if (code.equals(trueCode)) {
             Integer id = (Integer) session.getAttribute("idOrder");
             orderService.giveOrder(id);
@@ -94,6 +95,7 @@ public class EmployeeController {
             session.removeAttribute("code");
             return "redirect:/employee/ordersTable";
         }
+
         session.setAttribute("invalidCode", "invalidCode");
         return "redirect:/employee/enterCode";
 

@@ -6,6 +6,7 @@ import com.gmail.kostia_borozdyh.entity.User;
 import com.gmail.kostia_borozdyh.service.impl.ReviewService;
 import com.gmail.kostia_borozdyh.service.impl.UserService;
 import com.gmail.kostia_borozdyh.util.ConvertToDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,11 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 @Controller
-public class GuestController {
+@Slf4j
+public class MainController {
     private UserService userService;
     private ReviewService reviewService;
 
@@ -42,6 +45,7 @@ public class GuestController {
             user = userService.findByLogin(principal.getName());
             user.setPassword("");
             session.setAttribute("user", user);
+            log.info("Register user in session with login - "+user.getLogin());
         }
         boolean userIsAuthorized = user != null;
 
