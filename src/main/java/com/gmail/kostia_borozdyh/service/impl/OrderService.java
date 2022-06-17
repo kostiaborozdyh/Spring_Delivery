@@ -64,7 +64,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void saveOrder(OrderDTO orderDTO) {
+    public Order saveOrder(OrderDTO orderDTO) {
         Order order = Order.fromDTO(orderDTO);
         order.setDateCreate(Date.valueOf(LocalDate.now()));
         order.setDateOfArrival(Date.valueOf(Calculate.arrivalTime(orderDTO.getDistance())));
@@ -72,6 +72,7 @@ public class OrderService implements IOrderService {
         order.setPaymentStatus(paymentStatusRepository.getPaymentStatusById(1));
         orderRepository.save(order);
         log.info("save order to dataBase");
+        return order;
     }
 
     @Override
@@ -99,7 +100,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void confirmOrderById(Integer id) {
+    public Order confirmOrderById(Integer id) {
         Order order = orderRepository.getOrderById(id);
         order.setPaymentStatus(paymentStatusRepository.getPaymentStatusById(2));
         order.setLocationStatus(locationStatusRepository.getLocationStatusById(2));
@@ -110,6 +111,7 @@ public class OrderService implements IOrderService {
             SendEmail.send(order.getUser().getEmail(), CreateMessage.messageChangePaymentStatus(order.getPrice()));
         }
         log.info("confirm order by id - "+id);
+        return order;
     }
 
     @Override
@@ -125,7 +127,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void putOnRecord(Integer id) {
+    public Order putOnRecord(Integer id) {
         Order order = orderRepository.getOrderById(id);
         order.setLocationStatus(locationStatusRepository.getLocationStatusById(3));
         orderRepository.save(order);
@@ -134,13 +136,15 @@ public class OrderService implements IOrderService {
             SendEmail.send(user.getEmail(), CreateMessage.putOnRecord(id));
         }
         log.info("put on record(change location status) order by id "+id);
+        return order;
     }
 
     @Override
-    public void giveOrder(Integer id) {
+    public Order giveOrder(Integer id) {
         Order order = orderRepository.getOrderById(id);
         order.setLocationStatus(locationStatusRepository.getLocationStatusById(4));
         orderRepository.save(order);
         log.info("give(change location status) order by id "+id);
+        return order;
     }
 }

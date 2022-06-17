@@ -9,7 +9,7 @@ import java.util.List;
 public interface IOrderService {
     OrderDTO calculateOrderPrice(OrderDTO orderDTO);
 
-    void saveOrder(OrderDTO orderDTO);
+    Order saveOrder(OrderDTO orderDTO);
 
     List<Order> getOrdersByUser(User user);
 
@@ -17,13 +17,13 @@ public interface IOrderService {
 
     void updateOrderPaymentStatusById(Integer id);
 
-    void confirmOrderById(Integer id);
+    Order confirmOrderById(Integer id);
 
     List<Order> getOrdersByCity(String city);
 
     List<Order> getAcceptOrdersByCity(String city);
 
-    void putOnRecord(Integer id);
+    Order putOnRecord(Integer id);
 
-    void giveOrder(Integer id);
+    Order giveOrder(Integer id);
 }

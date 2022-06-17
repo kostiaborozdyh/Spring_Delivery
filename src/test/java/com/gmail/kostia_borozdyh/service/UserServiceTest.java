@@ -1,6 +1,5 @@
 package com.gmail.kostia_borozdyh.service;
 
-import com.gmail.kostia_borozdyh.controller.MainController;
 import com.gmail.kostia_borozdyh.dto.UserDTO;
 import com.gmail.kostia_borozdyh.entity.User;
 import com.gmail.kostia_borozdyh.repository.UserRepository;
