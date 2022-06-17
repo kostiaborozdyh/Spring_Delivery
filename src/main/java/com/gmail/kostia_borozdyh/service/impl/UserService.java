@@ -116,7 +116,7 @@ public class UserService implements IUserService, UserDetailsService {
     public void updateUserPassword(String email, String password) {
         User user = userRepository.findByEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        saveUser(user);
+        userRepository.save(user);
         log.info("update user password in dataBase by user email"+email);
     }
 
