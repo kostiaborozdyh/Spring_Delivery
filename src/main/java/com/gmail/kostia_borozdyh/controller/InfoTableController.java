@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,8 +47,7 @@ public class InfoTableController {
     }
 
     @PostMapping("/sortTable")
-    public String sortInfoTable(HttpServletRequest request, HttpSession session) {
-        String sort = request.getParameter("sort");
+    public String sortInfoTable(@RequestParam(name = "sort") String sort, HttpSession session) {
 
         List<InfoTableDTO> infoTableList = (List<InfoTableDTO>) session.getAttribute("infoTable");
         List<Integer> pageNumberList = (List<Integer>) session.getAttribute("list");
@@ -64,8 +64,7 @@ public class InfoTableController {
     }
 
     @GetMapping("/showMap")
-    public String showMap(HttpServletRequest request, HttpSession session) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    public String showMap(@RequestParam(name = "id") Integer id, HttpSession session) {
         List<InfoTableDTO> infoTable = (List<InfoTableDTO>) session.getAttribute("infoTable");
         session.setAttribute("table", infoTableService.getInfoTableById(infoTable, id));
         return "redirect:/info";
