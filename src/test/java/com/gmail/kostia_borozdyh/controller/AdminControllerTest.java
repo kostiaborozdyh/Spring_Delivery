@@ -30,8 +30,7 @@ public class AdminControllerTest {
     public void authorizationAdminTest() throws Exception {
         this.mockMvc.perform(get("/")).
                 andDo(print())
-                .andExpect(authenticated())
-                .andExpect(redirectedUrl("/adm/usersTable"));
+                .andExpect(authenticated());
     }
 
     @Test

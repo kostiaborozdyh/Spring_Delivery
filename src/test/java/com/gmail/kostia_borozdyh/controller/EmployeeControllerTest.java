@@ -30,8 +30,7 @@ public class EmployeeControllerTest {
     public void authorizationEmployeeTest() throws Exception {
         this.mockMvc.perform(get("/")).
                 andDo(print())
-                .andExpect(authenticated())
-                .andExpect(redirectedUrl("/employee/ordersTable"));
+                .andExpect(authenticated());
     }
 
     @Test

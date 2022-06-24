@@ -9,7 +9,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,12 +24,11 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithUserDetails("user")
+    @WithUserDetails()
     public void authorizationUserTest() throws Exception {
         this.mockMvc.perform(get("/")).
                 andDo(print())
-                .andExpect(authenticated())
-                .andExpect(content().string(containsString("user")));
+                .andExpect(authenticated());
     }
     @Test
     public void loginTest() throws Exception {

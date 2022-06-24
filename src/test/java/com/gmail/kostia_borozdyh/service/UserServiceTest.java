@@ -4,8 +4,10 @@ import com.gmail.kostia_borozdyh.dto.UserDTO;
 import com.gmail.kostia_borozdyh.entity.User;
 import com.gmail.kostia_borozdyh.repository.UserRepository;
 import com.gmail.kostia_borozdyh.service.impl.UserService;
+import com.gmail.kostia_borozdyh.util.SendEmail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +28,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    public void findByLoginTest(){
+    public void findByLoginTest() {
         String login = "login";
         User user = new User();
         user.setLogin(login);
@@ -37,12 +39,12 @@ public class UserServiceTest {
 
         User newUser = userService.findByLogin(login);
 
-        Mockito.verify(userRepository,Mockito.times(1)).findByLogin(login);
-        assertEquals(user,newUser);
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(login);
+        assertEquals(user, newUser);
     }
 
     @Test
-    public void findByEmailTest(){
+    public void findByEmailTest() {
         String email = "kostiaborozdyh@gmail.com";
         User user = new User();
         user.setEmail(email);
@@ -53,8 +55,8 @@ public class UserServiceTest {
 
         User newUser = userService.findByEmail(email);
 
-        Mockito.verify(userRepository,Mockito.times(1)).findByEmail(email);
-        assertEquals(user,newUser);
+        Mockito.verify(userRepository, Mockito.times(1)).findByEmail(email);
+        assertEquals(user, newUser);
     }
 
 
@@ -68,15 +70,15 @@ public class UserServiceTest {
                 .when(userRepository)
                 .getById(100);
 
-        userService.updateUserMoneyById(50,100);
+        userService.updateUserMoneyById(50, 100);
 
         assertEquals(50, (int) user.getMoney());
 
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
     }
 
     @Test
-    public void blockUserTest(){
+    public void blockUserTest() {
         User user = new User();
         user.setBan("no");
         user.setId(101);
@@ -84,15 +86,16 @@ public class UserServiceTest {
         Mockito.doReturn(user)
                 .when(userRepository)
                 .getById(101);
-
+        MockedStatic<SendEmail> mockedSettings = Mockito.mockStatic(SendEmail.class);
         userService.blockUser(101);
 
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
-        assertEquals("yes",user.getBan());
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals("yes", user.getBan());
+        mockedSettings.close();
     }
 
     @Test
-    public void unblockUserTest(){
+    public void unblockUserTest() {
         User user = new User();
         user.setBan("yes");
         user.setId(101);
@@ -100,15 +103,16 @@ public class UserServiceTest {
         Mockito.doReturn(user)
                 .when(userRepository)
                 .getById(101);
-
+        MockedStatic<SendEmail> mockedSettings = Mockito.mockStatic(SendEmail.class);
         userService.unblockUser(101);
 
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
-        assertEquals("no",user.getBan());
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals("no", user.getBan());
+        mockedSettings.close();
     }
 
     @Test
-    public void deleteUserTest(){
+    public void deleteUserTest() {
         User user = new User();
         user.setId(101);
 
@@ -116,14 +120,16 @@ public class UserServiceTest {
                 .when(userRepository)
                 .getById(101);
         User newUser = userRepository.getById(101);
-
+        MockedStatic<SendEmail> mockedSettings = Mockito.mockStatic(SendEmail.class);
         userService.deleteUser(101);
 
-        Mockito.verify(userRepository,Mockito.times(1)).delete(user);
-        assertEquals(user,newUser);
+        Mockito.verify(userRepository, Mockito.times(1)).delete(user);
+        assertEquals(user, newUser);
+        mockedSettings.close();
     }
+
     @Test
-    public void getUserEmailForRestoreWithLoginTest(){
+    public void getUserEmailForRestoreWithLoginTest() {
         String login = "login";
         String email = "email@email.com";
         User user = new User();
@@ -133,13 +139,14 @@ public class UserServiceTest {
                 .when(userRepository)
                 .findByLogin(login);
         String userEmail = userService.getUserEmailForRestore(login);
-        Mockito.verify(userRepository,Mockito.times(1)).findByLogin(login);
-        Mockito.verify(userRepository,Mockito.times(0)).findByEmail(login);
-        assertEquals(user.getEmail(),userEmail);
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(login);
+        Mockito.verify(userRepository, Mockito.times(0)).findByEmail(login);
+        assertEquals(user.getEmail(), userEmail);
 
     }
+
     @Test
-    public void getUserEmailForRestoreWithEmailTest(){
+    public void getUserEmailForRestoreWithEmailTest() {
         String email = "email@email.com";
         User user = new User();
         user.setEmail(email);
@@ -150,14 +157,14 @@ public class UserServiceTest {
                 .when(userRepository)
                 .findByEmail(email);
         String userEmail = userService.getUserEmailForRestore(email);
-        Mockito.verify(userRepository,Mockito.times(1)).findByLogin(email);
-        Mockito.verify(userRepository,Mockito.times(1)).findByEmail(email);
-        assertEquals(user.getEmail(),userEmail);
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(email);
+        Mockito.verify(userRepository, Mockito.times(1)).findByEmail(email);
+        assertEquals(user.getEmail(), userEmail);
 
     }
 
     @Test
-    public void getUserEmailForRestoreWithNullTest(){
+    public void getUserEmailForRestoreWithNullTest() {
         String email = "ema";
         User user = new User();
         user.setEmail(email);
@@ -168,14 +175,14 @@ public class UserServiceTest {
                 .when(userRepository)
                 .findByEmail(email);
         String userEmail = userService.getUserEmailForRestore(email);
-        Mockito.verify(userRepository,Mockito.times(1)).findByLogin(email);
-        Mockito.verify(userRepository,Mockito.times(1)).findByEmail(email);
+        Mockito.verify(userRepository, Mockito.times(1)).findByLogin(email);
+        Mockito.verify(userRepository, Mockito.times(1)).findByEmail(email);
         assertNull(userEmail);
 
     }
 
     @Test
-    public void updateUserPasswordTest(){
+    public void updateUserPasswordTest() {
         String email = "email";
         User user = new User();
         user.setEmail(email);
@@ -185,14 +192,14 @@ public class UserServiceTest {
         Mockito.doReturn("123")
                 .when(passwordEncoder)
                 .encode("11");
-        userService.updateUserPassword(email,"11");
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
-        assertEquals(user.getPassword(),"123");
+        userService.updateUserPassword(email, "11");
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals(user.getPassword(), "123");
 
     }
 
     @Test
-    public void saveUserTest(){
+    public void saveUserTest() {
         User user = new User();
         user.setPassword("password");
         user.setLogin("login");
@@ -205,17 +212,17 @@ public class UserServiceTest {
         Mockito.doReturn(user)
                 .when(userRepository)
                 .findByLogin("login");
-        userService.saveUser(user,userDTO);
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
-        assertEquals(user.getPassword(),"password");
-        assertEquals(user.getFirstName(),"firstName");
-        assertEquals(user.getLastName(),"lastName");
-        assertEquals(user.getEmail(),"email");
-        assertEquals(user.getPhoneNumber(),"phoneNumber");
+        userService.saveUser(user, userDTO);
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals(user.getPassword(), "password");
+        assertEquals(user.getFirstName(), "firstName");
+        assertEquals(user.getLastName(), "lastName");
+        assertEquals(user.getEmail(), "email");
+        assertEquals(user.getPhoneNumber(), "phoneNumber");
     }
 
     @Test
-    public void saveUserWithPasswordTest(){
+    public void saveUserWithPasswordTest() {
         User user = new User();
         user.setPassword("password12345");
         user.setLogin("login");
@@ -227,9 +234,9 @@ public class UserServiceTest {
         Mockito.doReturn("password123")
                 .when(passwordEncoder)
                 .encode("password");
-        userService.saveUser(user,userDTO);
-        Mockito.verify(userRepository,Mockito.times(1)).save(user);
-        assertEquals(user.getPassword(),"password123");
+        userService.saveUser(user, userDTO);
+        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        assertEquals(user.getPassword(), "password123");
     }
 
 }

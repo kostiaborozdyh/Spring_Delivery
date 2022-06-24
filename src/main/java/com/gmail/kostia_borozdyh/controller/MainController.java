@@ -38,15 +38,9 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String getIndexPage(Principal principal, HttpSession session) {
+    public String getIndexPage(HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        if (principal != null && user == null) {
-            user = userService.findByLogin(principal.getName());
-            user.setPassword("");
-            session.setAttribute("user", user);
-            log.info("Register user in session with login - "+user.getLogin());
-        }
         boolean userIsAuthorized = user != null;
 
         if (userIsAuthorized) {

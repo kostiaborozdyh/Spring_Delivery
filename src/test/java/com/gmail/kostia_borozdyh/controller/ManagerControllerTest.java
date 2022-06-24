@@ -29,8 +29,7 @@ public class ManagerControllerTest {
     public void authorizationManagerTest() throws Exception {
         this.mockMvc.perform(get("/")).
                 andDo(print())
-                .andExpect(authenticated())
-                .andExpect(redirectedUrl("/order"));
+                .andExpect(authenticated());
     }
 
     @Test
