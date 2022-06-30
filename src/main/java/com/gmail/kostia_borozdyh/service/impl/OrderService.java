@@ -46,11 +46,11 @@ public class OrderService implements IOrderService {
     public OrderDTO calculateOrderPrice(OrderDTO orderDTO) {
         List<InfoTableDTO> infoTable;
         try {
-            log.info("calculating distance between cityFrom - "+orderDTO.getCityFrom()+" and cityTo - "+orderDTO.getCityTo());
+            log.info("calculating distance between cityFrom - " + orderDTO.getCityFrom() + " and cityTo - " + orderDTO.getCityTo());
             infoTable = GoogleMaps.getDistance(orderDTO.getCityFrom(), orderDTO.getCityTo());
         } catch (ParseException e) {
             log.error("problem with parsing data that we take from GoogleAPI");
-            log.error("Exception - "+e);
+            log.error("Exception - " + e);
             throw new RuntimeException(e);
         }
         int volume = Calculate.volume(orderDTO.getHeight(), orderDTO.getLength(), orderDTO.getWidth());
@@ -77,7 +77,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<Order> getOrdersByUser(User user) {
-        log.info("get orders from dataBase by userRole - "+user.getRole().getRole());
+        log.info("get orders from dataBase by userRole - " + user.getRole().getRole());
         if (user.getRole().getRole().equals("USER")) {
             return orderRepository.getAllByUser(user);
         }
@@ -87,7 +87,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order getOrderById(Integer id) {
-        log.info("get orders from dataBase by orderId - "+id);
+        log.info("get orders from dataBase by orderId - " + id);
         return orderRepository.getOrderById(id);
     }
 
@@ -96,7 +96,7 @@ public class OrderService implements IOrderService {
         Order order = orderRepository.getOrderById(id);
         order.setPaymentStatus(paymentStatusRepository.getPaymentStatusById(3));
         orderRepository.save(order);
-        log.info("change paymentStatus order with id - "+id+" on payment status with id 3");
+        log.info("change paymentStatus order with id - " + id + " on payment status with id 3");
     }
 
     @Override
@@ -110,19 +110,19 @@ public class OrderService implements IOrderService {
         if (order.getUser().getNotify().equals("yes")) {
             SendEmail.send(order.getUser().getEmail(), CreateMessage.messageChangePaymentStatus(order.getPrice()));
         }
-        log.info("confirm order by id - "+id);
+        log.info("confirm order by id - " + id);
         return order;
     }
 
     @Override
     public List<Order> getOrdersByCity(String city) {
-        log.info("get orders from dateBase with field cityTo - "+city+" and location status with id 3");
+        log.info("get orders from dateBase with field cityTo - " + city + " and location status with id 3");
         return orderRepository.findAllByCityToAndLocationStatus(JsonParser.cutCityName(city), locationStatusRepository.getLocationStatusById(3));
     }
 
     @Override
     public List<Order> getAcceptOrdersByCity(String city) {
-        log.info("get orders from dateBase with field cityTo - "+city+" and location status with id 2 and date of arrival under "+LocalDate.now());
+        log.info("get orders from dateBase with field cityTo - " + city + " and location status with id 2 and date of arrival under " + LocalDate.now());
         return orderRepository.findAllByCityToAndLocationStatusAndDateOfArrivalIsBefore(JsonParser.cutCityName(city), locationStatusRepository.getLocationStatusById(2), Date.valueOf(LocalDate.now().plusDays(1)));
     }
 
@@ -135,7 +135,7 @@ public class OrderService implements IOrderService {
         if (user.getNotify().equals("yes")) {
             SendEmail.send(user.getEmail(), CreateMessage.putOnRecord(id));
         }
-        log.info("put on record(change location status) order by id "+id);
+        log.info("put on record(change location status) order by id " + id);
         return order;
     }
 
@@ -144,7 +144,7 @@ public class OrderService implements IOrderService {
         Order order = orderRepository.getOrderById(id);
         order.setLocationStatus(locationStatusRepository.getLocationStatusById(4));
         orderRepository.save(order);
-        log.info("give(change location status) order by id "+id);
+        log.info("give(change location status) order by id " + id);
         return order;
     }
 }

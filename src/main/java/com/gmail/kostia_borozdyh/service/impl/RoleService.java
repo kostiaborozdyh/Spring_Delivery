@@ -19,7 +19,7 @@ public class RoleService implements IRoleService {
 
     @Override
     public Role findRoleById(Integer id) {
-        log.info("get role from dateBase by id - "+id);
+        log.info("get role from dateBase by id - " + id);
         return roleRepository.getRoleById(id);
     }
 }

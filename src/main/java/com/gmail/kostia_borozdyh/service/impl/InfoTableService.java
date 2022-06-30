@@ -21,11 +21,11 @@ public class InfoTableService implements IInfoTableService {
     @Override
     public List<InfoTableDTO> getInfoTable(String cityFrom, String cityTo) {
         try {
-            log.info("calculating distance between cityFrom - "+cityFrom+" and cityTo - "+cityTo);
+            log.info("calculating distance between cityFrom - " + cityFrom + " and cityTo - " + cityTo);
             return Table.getInfoTable(cityFrom, cityTo);
         } catch (ParseException e) {
             log.error("problem with parsing data that we take from GoogleAPI");
-            log.error("Exception - "+e);
+            log.error("Exception - " + e);
             throw new RuntimeException(e);
         }
     }

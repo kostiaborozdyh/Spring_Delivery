@@ -32,6 +32,7 @@ public class MainControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Головна")));
     }
+
     @Test
     public void aboutUsGetPageTest() throws Exception {
         this.mockMvc.perform(get("/aboutUs")).
@@ -39,6 +40,7 @@ public class MainControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("поштово-вантажна компанія")));
     }
+
     @Test
     public void reviewGetPageTest() throws Exception {
         this.mockMvc.perform(get("/reviews")).
@@ -46,6 +48,7 @@ public class MainControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Додано")));
     }
+
     @Test
     public void registrationGetPageTest() throws Exception {
         this.mockMvc.perform(get("/registration")).

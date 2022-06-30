@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ChangePageController {
     @GetMapping("/changePage")
     public String changePage(@RequestParam(name = "id") Integer id, @RequestParam(name = "fun") Integer fun,
-                             HttpSession session,HttpServletRequest request) {
+                             HttpSession session, HttpServletRequest request) {
         String referer = request.getHeader("Referer");
         switch (fun) {
             case 1: {
@@ -49,7 +49,7 @@ public class ChangePageController {
             }
 
         }
-        log.error("problem with changing page, pageNumber = "+id+", fun = "+fun);
+        log.error("problem with changing page, pageNumber = " + id + ", fun = " + fun);
         return "error-505";
     }
 }

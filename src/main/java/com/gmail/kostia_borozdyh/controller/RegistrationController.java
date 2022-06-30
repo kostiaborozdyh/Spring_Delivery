@@ -100,7 +100,7 @@ public class RegistrationController {
         session.removeAttribute("userDTO");
         session.removeAttribute("validation");
 
-        log.info("register user with login - "+userDTO.getLogin());
+        log.info("register user with login - " + userDTO.getLogin());
 
         if (session.getAttribute("user") == null) {
             session.setAttribute("registration", "yes");

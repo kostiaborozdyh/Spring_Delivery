@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
 public class GoogleMaps {
     public static final String API_KEY = "&key=AIzaSyDZ_4ASyzLdt1d16-mekZg5W4X24P0zIR4";
@@ -21,7 +22,7 @@ public class GoogleMaps {
     public static List<InfoTableDTO> getDistance(String cityFrom, String cityTo) throws ParseException {
         List<InfoTableDTO> distanceList = new ArrayList<>();
         try {
-            log.info("making request to GoggleAPI distance between cityFrom - "+cityFrom+" and cityTo - "+cityTo);
+            log.info("making request to GoggleAPI distance between cityFrom - " + cityFrom + " and cityTo - " + cityTo);
             OkHttpClient client = new OkHttpClient();
             String url = HTTP_MAPS + cityFrom + DESTINATIONS + cityTo + LANGUAGE + API_KEY;
             Request googleRequest = new Request.Builder()
@@ -34,7 +35,7 @@ public class GoogleMaps {
             googleResponse.close();
         } catch (Exception ex) {
             log.error("problem with request that we send GoogleAPI distance");
-            log.error("Exception - "+ex);
+            log.error("Exception - " + ex);
         }
         return distanceList;
     }
@@ -42,7 +43,7 @@ public class GoogleMaps {
     public static PointDTO getCityCoordinates(String city) {
         PointDTO point = new PointDTO();
         try {
-            log.info("making request to GoggleAPI geocode in city - "+city);
+            log.info("making request to GoggleAPI geocode in city - " + city);
             OkHttpClient client = new OkHttpClient();
             String url = HTTP_GEOCODE + city + API_KEY;
             Request googleRequest = new Request.Builder()
@@ -55,7 +56,7 @@ public class GoogleMaps {
             googleResponse.close();
         } catch (Exception ex) {
             log.error("problem with request that we send GoogleAPI geocode");
-            log.error("Exception - "+ex);
+            log.error("Exception - " + ex);
         }
         return point;
     }

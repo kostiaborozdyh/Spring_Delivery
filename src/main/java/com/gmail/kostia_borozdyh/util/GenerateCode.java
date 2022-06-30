@@ -1,9 +1,5 @@
 package com.gmail.kostia_borozdyh.util;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-
 public class GenerateCode {
 
     public static String restorePassword(String email) {

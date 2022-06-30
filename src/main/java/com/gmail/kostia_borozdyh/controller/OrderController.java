@@ -36,7 +36,7 @@ public class OrderController {
         if (orderList == null) {
             orderList = orderService.getOrdersByUser(user);
             session.setAttribute("orders", orderList);
-            log.info("add orders in session orderList for user - "+user.getLogin());
+            log.info("add orders in session orderList for user - " + user.getLogin());
         }
 
         model.addAttribute("cityFromSet", Calculate.cityFromSet(orderList));

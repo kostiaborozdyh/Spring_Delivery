@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class LocaleController {
     @GetMapping("/international")
     public String changeLocale(@RequestParam(name = "lang") String lang, HttpSession session, HttpServletRequest request) {
-        log.info("change language for "+lang);
+        log.info("change language for " + lang);
         session.setAttribute("local", lang);
 
         String referer = request.getHeader("Referer");

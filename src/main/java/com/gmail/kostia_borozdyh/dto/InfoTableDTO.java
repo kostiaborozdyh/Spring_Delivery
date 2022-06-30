@@ -17,10 +17,10 @@ public class InfoTableDTO {
     private Integer distance;
     private Integer price;
 
-    public InfoTableDTO(String cityFrom, String cityTo, Integer distance){
-        this.cityFrom=cityFrom;
-        this.cityTo=cityTo;
-        this.distance=distance;
+    public InfoTableDTO(String cityFrom, String cityTo, Integer distance) {
+        this.cityFrom = cityFrom;
+        this.cityTo = cityTo;
+        this.distance = distance;
     }
 
 }

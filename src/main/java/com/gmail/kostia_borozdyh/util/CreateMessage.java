@@ -47,6 +47,7 @@ public class CreateMessage {
     public static String[] putOnRecord(Integer id) {
         return new String[]{THEME_PUT_ON_RECORD, TEXT_PUT_ON_RECORD + id};
     }
+
     public static String[] messageSendOrder(OrderDTO order) {
         String sbTheme = THEME_SEND_ORDER + order.getId();
         String sb = "Опис: " + order.getDescription() + "\n" +

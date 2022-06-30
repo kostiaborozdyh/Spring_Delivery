@@ -31,14 +31,15 @@ public class LoginTest {
 
     @Test
     public void correctLoginTest() throws Exception {
-        this.mockMvc.perform(post("/loginUser").param("login","user").param("password","qazwsxedcA7")).
+        this.mockMvc.perform(post("/loginUser").param("login", "user").param("password", "qazwsxedcA7")).
                 andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("/"));
     }
+
     @Test
     public void unCorrectLoginTest() throws Exception {
-        this.mockMvc.perform(post("/loginUser").param("login","useree").param("password","qazwsxedcA7")).
+        this.mockMvc.perform(post("/loginUser").param("login", "useree").param("password", "qazwsxedcA7")).
                 andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login?error"));

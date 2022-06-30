@@ -70,8 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/pay")
-    public String payOrder(@RequestParam(name = "id") Integer orderId,@RequestParam(name = "value") Integer value,
-                           @RequestParam(name = "money") Integer money,HttpSession session) {
+    public String payOrder(@RequestParam(name = "id") Integer orderId, @RequestParam(name = "value") Integer value,
+                           @RequestParam(name = "money") Integer money, HttpSession session) {
 
         User user = (User) session.getAttribute("user");
         user.setMoney(money - value);
@@ -79,7 +79,7 @@ public class UserController {
         userService.updateUserMoneyById(money - value, user.getId());
         orderService.updateOrderPaymentStatusById(orderId);
 
-        log.info("user with login - "+user.getLogin()+" pay for order, order price - "+value+" now he has "+user.getMoney()+"$");
+        log.info("user with login - " + user.getLogin() + " pay for order, order price - " + value + " now he has " + user.getMoney() + "$");
 
         return "redirect:/resetOrder";
     }
@@ -93,7 +93,7 @@ public class UserController {
     @PostMapping("/refill")
     public String refillMoney(@RequestParam(name = "value") Integer value, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        int money=0;
+        int money = 0;
 
         if (user.getMoney() != null) {
             money = user.getMoney();
@@ -102,7 +102,7 @@ public class UserController {
         user.setMoney(money + value);
         userService.updateUserMoneyById(money + value, user.getId());
 
-        log.info("user with login - "+user.getLogin()+" refill his account on "+value+" now he has "+user.getMoney()+"$");
+        log.info("user with login - " + user.getLogin() + " refill his account on " + value + " now he has " + user.getMoney() + "$");
 
         return "redirect:/user/refill";
     }

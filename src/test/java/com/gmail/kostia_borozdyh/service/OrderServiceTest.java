@@ -208,6 +208,7 @@ public class OrderServiceTest {
         assertEquals(order, newOrder);
         assertEquals(newOrder.getLocationStatus(), newLocationStatus);
     }
+
     @Test
     public void giveOrderTest() {
         Order order = new Order();

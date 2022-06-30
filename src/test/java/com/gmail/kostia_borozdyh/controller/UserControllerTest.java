@@ -30,6 +30,7 @@ public class UserControllerTest {
                 andDo(print())
                 .andExpect(authenticated());
     }
+
     @Test
     public void loginTest() throws Exception {
         this.mockMvc.perform(get("/user/createOrder")).

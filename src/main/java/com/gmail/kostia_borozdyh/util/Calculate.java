@@ -15,7 +15,7 @@ public class Calculate {
     }
 
     public static Integer avgPrice(Integer distance) {
-        if (distance == 0){
+        if (distance == 0) {
             return 100;
         }
         return distance * 15 / 10;
